@@ -8,30 +8,36 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 columns */
     grid-template-rows: repeat(2, 1fr);    /* 2 rows */
-    gap: 20px; /* increase space between items */
-  
-    padding: 20px 20px 40px 20px; /* top, right, bottom, left */
+    gap: 30px; /* increase space between items */
+    padding: 20px 20px 20px 20px; /* top, right, bottom, left */
     margin: 0;
-    height: 95vh;  /* container fills most of the viewport height */
+    height: 70vh;  /* container fills most of the viewport height */
     width: 95vw;   /* container fills most of the viewport width */
     box-sizing: border-box;
-    border: 2px solid black;
+ 
 }
 
-#searchresult > div {
-    aspect-ratio: 10 / 12.4; 
-    width: 100%;             
+  #searchresult > div {
+ 
+    aspect-ratio: 10 / 11; 
     background: #f0f0f0;
     border: 1px solid #000;
-  
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
+    width: 80%;
+  
+  }
+ 
   #maindiv {
     display: flex;
     justify-content: center; 
     align-items: center;    
     flex-direction: column;
   }
-  
+  #pagenavigation {
+    background-color: #ddd;
+    padding: 5px;
+    margin: 40px;
+  }
