@@ -6,20 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>OMDB Client</title>
-    <style>
-        #maindiv {
-      display: flex;
-      justify-content: center; 
-      align-items: center;    
-      flex-direction: column;
-    }
-        #searchresult {
-      display: flex;
-      justify-content: center; 
-      align-items: center; 
-      
-    }
-    </style>
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
 </head>
 <body style="align-items: center;">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -38,22 +26,13 @@
             <select name="selecttype" id="selecttype">
                 <option value="s">Ricerca tradizionale (consigliato)</option>
                 <option value="i">Ricerca con ID</option>
+                <option value="t">Ricerca con titolo</option>
             </select>
             <input type="text" id="searchstring" >
             <button id="searchbutton">Cerca</button>
         </div>
-        <div id="searchresult" class="form-group">
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-           <div style="height: 200px; width: 200px; background-color: #ff0000;">dio</div>
-
+        <div id="searchresult">
+         
         </div>
     </div>
 </body>
