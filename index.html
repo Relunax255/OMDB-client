@@ -20,30 +20,39 @@
         </div>
     </nav>
 
-    <div id="maindiv" style="align-self: auto;">
+    <div id="maindiv">
 
         <div id="searcharea" class="form-group" style="margin-bottom: 2%;">
+            
             <select name="selecttype" id="selecttype">
                 <option value="s">Ricerca tradizionale (consigliato)</option>
                 <option value="i">Ricerca con ID</option>
                 <option value="t">Ricerca con titolo</option>
             </select>
-            <input type="text" id="searchstring" >
+             <div class="field-with-message">
+              <input type="text" id="searchstring" placeholder="cerca...">
+              <span id="searchmessage" class="msg-text"></span>
+            </div>
             <button id="searchbutton">Cerca</button>
+            <div class="field-with-message">
+              <input type="text" id="apikey" placeholder="inserire chiave">
+              <span id="apikeymessage" class="msg-text"></span>
+            </div>
+             
         </div>
         
       
-        <div id="searchresult">
+        <div id="searchresult" style="border: 2px solid black;">
             
         </div>
        
 
         <div id="pagenavigation" class="form-group" style="margin-bottom: 2%;">
-          <button>|&lt;</button>
+          <button>[...</button>
           <button>&lt;</button>
           <label>Pagina <span id="selectedpagenumber"></span> di <span id="totalpagesnumber"></span></label>
           <button>&gt;</button>
-          <button>&gt;|</button>
+          <button>...]</button>
         </div>
     </div>
 </body>
