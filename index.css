@@ -10,7 +10,7 @@ html, body {
   gap: 30px; 
   padding: 20px 20px 20px 20px; 
   margin: 0;
-  height: 90vh;  
+  height: 120vh;  
   width: 95vw;   
   box-sizing: border-box;
 
@@ -37,13 +37,24 @@ html, body {
   align-items: center;         
   font-weight: bold;
   border-radius: 8px;
-  background-color: #aaa;
-             
-   
+  background-color: #fff;
+  border: 1px solid black;
+  height: 100%;      
+  overflow: hidden; 
 }
 
 .item img {
   width: 100%;  
-  height: auto; 
-  display: block; 
+  height: 85%; 
+}
+ .field-with-message {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center; 
+}
+.field-with-message .msg-text {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #f00;
 }
