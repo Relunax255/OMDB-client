@@ -5,13 +5,13 @@ html, body {
 
 #searchresult {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 columns */
-  grid-template-rows: repeat(2, 1fr);    /* 2 rows */
-  gap: 30px; /* increase space between items */
-  padding: 20px 20px 20px 20px; /* top, right, bottom, left */
+  grid-template-columns: repeat(5, 1fr); 
+  grid-template-rows: repeat(2, 1fr);   
+  gap: 30px; 
+  padding: 20px 20px 20px 20px; 
   margin: 0;
-  height: 90vh;  /* container fills most of the viewport height */
-  width: 95vw;   /* container fills most of the viewport width */
+  height: 90vh;  
+  width: 95vw;   
   box-sizing: border-box;
 
 }
@@ -31,15 +31,19 @@ html, body {
 
 
 .item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ 
+  flex-direction: column;      
+  justify-content: space-between; 
+  align-items: center;         
   font-weight: bold;
   border-radius: 8px;
-  background-color: #aaa
+  background-color: #aaa;
+             
+   
 }
+
 .item img {
-  max-width: 80%;
-  height: auto;
-  margin-bottom: 8px;
+  width: 100%;  
+  height: auto; 
+  display: block; 
 }
