@@ -17,9 +17,11 @@ window.addEventListener("load", event => {
   let globally_visible_searchparams = null;
   let pages = 0;
   const fixed_url  = "http://www.omdbapi.com/?"
+  let results_list = [];
   
   function search(searchparams) { //obj
     DIV_SEARCHRESULTCONTAINER.innerHTML="";
+    DIV_SEARCHRESULTCONTAINER.innerText="Caricamento";
     let url = fixed_url;
     url+= "apikey=" + searchparams.apiKey + "&";
     url+= searchparams.searchType + "=" + encodeURIComponent(searchparams.searchString);
@@ -29,7 +31,6 @@ window.addEventListener("load", event => {
 
       .then(response => response.json())
       .then(data => {
-        //data is an object
         if (data.Response==="False") {
           DIV_SEARCHRESULTCONTAINER.innerText=data.Error + "\r\nProva a modificare i criteri di ricerca"; return;
         }
@@ -37,6 +38,7 @@ window.addEventListener("load", event => {
           case "s":
            
             if (Number(data.totalResults)>10) {paged=true; pages=Math.ceil(data.totalResults/10);}
+            else {paged=false; pages=1;}
             data.Search.forEach(itemData => {
               const item = document.createElement("div");
               item.className = "item";
@@ -45,14 +47,17 @@ window.addEventListener("load", event => {
                 this.src = "img/image_alt.png";
               }
               img.src = itemData.Poster;
-              
               item.appendChild(img);
               let title = document.createElement("div");
               title.style.margin="7px";
               title.innerText = itemData.Title + " (" + itemData.Year + ")";
+             /* item.tagName=(itemData.Title + itemData.Year);
+              item.addEventListener("click", content => {
+                  alert("Titolo: " + itemData.Title + "\nAnno: " + itemData.Year + "\nTipo: " + itemData.Type + "\nIMDB ID: " + itemData.imdbID);
+              });*/
               item.appendChild(title);
-              
               DIV_SEARCHRESULTCONTAINER.appendChild(item);
+              results_list.push(itemData);
             });
 
             break;
@@ -61,6 +66,7 @@ window.addEventListener("load", event => {
             break;
           case "i":
             //single result
+            pages=1;
             paged=false;
             const item = document.createElement("div");
             item.className = "item";
@@ -74,10 +80,13 @@ window.addEventListener("load", event => {
             
             break;
         }
+        SPAN_CURRENTPAGENUMBER.innerText = paged ? searchparams.page : "1";
+        SPAN_TOTALPAGESNUMBER.innerText = paged ? pages : "1";
       })
       .catch(error => {
         alert("Errore durante la richiesta: " + error); return;
       });
+      DIV_SEARCHRESULTCONTAINER.innerText="";
   }
 
   BUTTON_SEARCH.addEventListener("click", () => {
@@ -104,43 +113,37 @@ window.addEventListener("load", event => {
   });
 
   BUTTON_PAGEXLEFT.addEventListener("click", () => {
-    if (!paged) return;
+    if (!paged) {return;}
     let params = globally_visible_searchparams
+    if (params.page<=1) {return;}
     params.page=1;
     globally_visible_searchparams=params;
     search(params);
   });
   BUTTON_PAGELEFT.addEventListener("click", () => {
-
+    if (!paged) {return;}
+    let params=globally_visible_searchparams;
+    if (params.page<=1) {return;}
+    params.page=params.page-1;
+    globally_visible_searchparams = params;
+    search(params);
   });
 
   BUTTON_PAGERIGHT.addEventListener("click", () => {
     if (!paged) {return;}
     let params=globally_visible_searchparams;
+    if (params.page>=pages) {return;}
     params.page=params.page+1;
     globally_visible_searchparams = params;
     search(params);
   });
 
   BUTTON_PAGEXRIGHT.addEventListener("click", () => {
-
+    if (!paged) {return;}
+    let params=globally_visible_searchparams;
+    if (params.page>=pages) {return;}
+    params.page=pages;
+    globally_visible_searchparams = params;
+    search(params);
   });
-
-/*
-    const items = [
-      { img: "https://via.placeholder.com/100", text: "Item One" }
-    ];
-    
-
-    items.forEach(data => {
-      const item = document.createElement("div");
-      item.className = "item";
-    
-      item.innerHTML = `
-        <img src="${data.img}" alt="item image">
-        <div>${data.text}</div>
-      `;
-    
-      DIV_SEARCHRESULTCONTAINER.appendChild(item);
-    }); */
 })
