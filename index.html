@@ -55,14 +55,19 @@
 
         <div id="filmModal" class="modal">
             <div class="modal-content">
-              <span id="modalClose"></span>
+               
               <img id="modalPoster" src="" alt="Poster">
-              <h2 id="modalTitle"></h2>
-              <p><strong>Anno:</strong> <span id="modalYear"></span></p>
-              <p><strong>Tipo:</strong> <span id="modalType"></span></p>
-              <p><strong>IMDB ID:</strong> <span id="modalImdb"></span></p>
+              <div>
+                <h2 id="modalTitle"></h2>
+                <p><span id="modalYear"></span></p> 
+                <p style="color: #bbb;"><span id="modalContent"></span></p> <br>
+                <p><strong>IMDB ID: </strong><span id="modalImdb"></span></p> 
+                <p><strong>Rating: </strong><span id="modalRating"></span></p>
+              </div>
+              
             </div>
-          </div>
+           <span id="modalClose"></span>
+        </div>
     </div>
 </body>
 </html>

@@ -54,7 +54,7 @@ window.addEventListener("load", event => {
               let title = document.createElement("div");
               title.style.margin="7px";
               title.innerText = itemData.Title + " (" + itemData.Year + ")";
-              item.addEventListener("click", () => openModal(itemData))
+              item.addEventListener("click", () => openModal(itemData.imdbID))
               item.appendChild(title);
               DIV_SEARCHRESULTCONTAINER.appendChild(item);
               results_list.push(itemData);
@@ -71,6 +71,9 @@ window.addEventListener("load", event => {
             const item = document.createElement("div");
             item.className = "item";
             let img = document.createElement("img");
+            img.onerror = function() {
+                this.src = "img/image_alt.png";
+              }
             img.src = data.Poster;
             item.appendChild(img);
             let title = document.createElement("div");
@@ -150,17 +153,36 @@ window.addEventListener("load", event => {
   const modalPoster = document.getElementById("modalPoster");
   const modalTitle = document.getElementById("modalTitle");
   const modalYear = document.getElementById("modalYear");
-  const modalType = document.getElementById("modalType");
+  const modalContent = document.getElementById("modalContent");
   const modalImdb = document.getElementById("modalImdb");
   const modalClose = document.getElementById("modalClose");
+  const modalRating = document.getElementById("modalRating");
 
-  function openModal(data) {
-      modalPoster.src = data.Poster;
-      modalTitle.innerText = data.Title;
-      modalYear.innerText = data.Year;
-      modalType.innerText = data.Type;
-      modalImdb.innerText = data.imdbID;
-
+  function openModal(id) {
+      
+      let url = fixed_url + "apikey=" + TEXTINPUT_APIKEY.value + "&i=" + id;
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+          modalTitle.innerText = data.Title;
+          modalYear.innerText = data.Year;
+          if (data.Plot==="N/A") {
+              modalContent.innerText = "Trama non disponibile.";
+          }
+          else {modalContent.innerText = data.Plot;}
+          modalImdb.innerText = data.imdbID; 
+          if (data.imdbRating==="N/A")
+              modalRating.innerText = "Non disponibile";
+          else
+              modalRating.innerText = data.imdbRating + "/10";
+          modalPoster.onerror = function() {
+              this.src = "img/image_alt.png";
+            }
+          modalPoster.src = data.Poster;
+      })
+      .catch(error => {
+          alert("Errore durante la richiesta: " + error); return;
+      });
       filmModal.style.display = "flex";
   }
 
