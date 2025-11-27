@@ -18,8 +18,11 @@ window.addEventListener("load", event => {
   let pages = 0;
   const fixed_url  = "http://www.omdbapi.com/?"
   let results_list = [];
+  let searching = false;
   
   function search(searchparams) { //obj
+    if (searching) {return;}
+    searching=true;
     DIV_SEARCHRESULTCONTAINER.innerHTML="";
     DIV_SEARCHRESULTCONTAINER.innerText="Caricamento";
     let url = fixed_url;
@@ -51,10 +54,7 @@ window.addEventListener("load", event => {
               let title = document.createElement("div");
               title.style.margin="7px";
               title.innerText = itemData.Title + " (" + itemData.Year + ")";
-             /* item.tagName=(itemData.Title + itemData.Year);
-              item.addEventListener("click", content => {
-                  alert("Titolo: " + itemData.Title + "\nAnno: " + itemData.Year + "\nTipo: " + itemData.Type + "\nIMDB ID: " + itemData.imdbID);
-              });*/
+              item.addEventListener("click", () => openModal(itemData))
               item.appendChild(title);
               DIV_SEARCHRESULTCONTAINER.appendChild(item);
               results_list.push(itemData);
@@ -77,7 +77,6 @@ window.addEventListener("load", event => {
             title.innerText = data.Title + " (" + data.Year + ")";
             item.appendChild(title);    
             DIV_SEARCHRESULTCONTAINER.appendChild(item);
-            
             break;
         }
         SPAN_CURRENTPAGENUMBER.innerText = paged ? searchparams.page : "1";
@@ -87,6 +86,7 @@ window.addEventListener("load", event => {
         alert("Errore durante la richiesta: " + error); return;
       });
       DIV_SEARCHRESULTCONTAINER.innerText="";
+      searching=false;
   }
 
   BUTTON_SEARCH.addEventListener("click", () => {
@@ -135,7 +135,7 @@ window.addEventListener("load", event => {
     if (params.page>=pages) {return;}
     params.page=params.page+1;
     globally_visible_searchparams = params;
-    search(params);
+    search(params);z
   });
 
   BUTTON_PAGEXRIGHT.addEventListener("click", () => {
@@ -145,5 +145,35 @@ window.addEventListener("load", event => {
     params.page=pages;
     globally_visible_searchparams = params;
     search(params);
+  });
+  const filmModal = document.getElementById("filmModal");
+  const modalPoster = document.getElementById("modalPoster");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalYear = document.getElementById("modalYear");
+  const modalType = document.getElementById("modalType");
+  const modalImdb = document.getElementById("modalImdb");
+  const modalClose = document.getElementById("modalClose");
+
+  function openModal(data) {
+      modalPoster.src = data.Poster;
+      modalTitle.innerText = data.Title;
+      modalYear.innerText = data.Year;
+      modalType.innerText = data.Type;
+      modalImdb.innerText = data.imdbID;
+
+      filmModal.style.display = "flex";
+  }
+
+  modalClose.addEventListener("click", () => {
+      filmModal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+      if (e.target === filmModal) filmModal.style.display = "none";
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === "Enter") {
+        BUTTON_SEARCH.click();
+    }
   });
 })
