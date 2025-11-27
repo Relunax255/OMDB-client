@@ -21,6 +21,7 @@ window.addEventListener("load", event => {
   let searching = false;
   
   function search(searchparams) { //obj
+    results_list = [];
     if (searching) {return;}
     searching=true;
     DIV_SEARCHRESULTCONTAINER.innerHTML="";
@@ -61,9 +62,6 @@ window.addEventListener("load", event => {
             });
 
             break;
-          case "t":
-
-            break;
           case "i":
             //single result
             pages=1;
@@ -77,9 +75,12 @@ window.addEventListener("load", event => {
             img.src = data.Poster;
             item.appendChild(img);
             let title = document.createElement("div");
+              title.style.margin="7px";
             title.innerText = data.Title + " (" + data.Year + ")";
+            item.addEventListener("click", () => openModal(data.imdbID))
             item.appendChild(title);    
             DIV_SEARCHRESULTCONTAINER.appendChild(item);
+            
             break;
         }
         SPAN_CURRENTPAGENUMBER.innerText = paged ? searchparams.page : "1";
